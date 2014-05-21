@@ -78,7 +78,7 @@ Finally, change to the `mp4` directory (or wherever you moved all the
 downloaded  videos to) and run either `ruby -run -ehttpd . -p8000` or if
 you prefer `python -m SimpleHTTPServer 8000`.  Either will run a static
 HTTP server on port 8000.
-You'd better be running a firewall so that the only access to this webserver is from localhost.  If you prefer a different one-line web server, (here's a whole list of them.)[https://gist.github.com/willurd/5720255]
+You'd better be running a firewall so that the only access to this webserver is from localhost.  If you prefer a different one-line web server, [here's a whole list of them.](https://gist.github.com/willurd/5720255)
 
 Appendix: old vs. new <video> tags in XML
 =========================================
