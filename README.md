@@ -21,7 +21,7 @@ Ruby, Python, and Perl.  Deal with it.  You therefore need:
  * The Nokogiri gem (`gem list nokogiri` to see if you have it; `gem
  install nokogiri`, possibly as root, if you don't)
  * Perl, any version >=5 (`perl -v` to check)
- * The [rg3.github.io/youtube-dl/](`youtube-dl`) Python script (which in turn relies on Python 2.6+; `python --version` to check)
+ * The [youtube-dl](rg3.github.io/youtube-dl/) Python script (which in turn relies on Python 2.6+; `python --version` to check)
  * Comfort using shell scripts and other power tools.  No GUI here.  If
  step 1 below looks alien to you, stop and get help.
 
@@ -29,6 +29,7 @@ What to do
 ==========
 
 There are three main sets of steps:
+
 0. Modify the course definition (XML) to point to videos locally rather than on YouTube
 1. Download the actual videos from YouTube
 2. Run a local Web server to serve those videos from local storage when you open the course
@@ -43,15 +44,18 @@ As a side effect, it also converts the XML markup in the  `.xml` files describin
 1. Export your edX course from Studio as a tar archive, un-gzip it, and change into its
 toplevel directory.  You should see subdirectories `video` and `drafts`
 in particular.
-2. Run this command:
+2. From within the toplevel directory of the course export, run this command:
 ```sh
 find video drafts/video -name '*.xml' | xargs ruby $BUNDLE_PATH/edx-localize.rb
 ```
-3. If all goes well, run the following command to delete the backup files:
+
+If all goes well, run the following command to delete the backup files:
+
 ```sh
 find video drafts/video -name '*.bak' -delete
 ```
-4. Tar up the course directory and re-import it into Studio.
+
+Tar up the course directory and re-import it into Studio.
 
 You should now have a course that can be deployed as usual (on Edge or wherever) but expects to find all its videos on a web server listening on `localhost:8000`.
 
@@ -62,23 +66,17 @@ could take a long time to run, since it will download '''every video in
 your course''' to local storage:
 
 5. Make sure `youtube-dl` is in your `$PATH`.
-6. From the 
+6. From the toplevel directory of the exported course, run
+`./download-videos.sh`.  This will attempt to create a new subdirectory
+`mp4/` and download all the videos into it.  It will take a long time.
 
 ## Run a local webserver
 
-Finally, change to the directory where you downloaded all the videos and run
-
-```sh        
- ruby -run -ehttpd . -p8000
-```
-
-Or if you prefer:
-
-```python
-python -m SimpleHTTPServer 8000
-```
-
-You'd better be running a firewall so that the only access to this webserver is from localhost.  If you prefer a different one-line web server, (https://gist.github.com/willurd/5720255)[here's a whole list of them.]
+Finally, change to the `mp4` directory (or wherever you moved all the
+downloaded  videos to) and run either `ruby -run -ehttpd . -p8000` or if
+you prefer `python -m SimpleHTTPServer 8000`.  Either will run a static
+HTTP server on port 8000.
+You'd better be running a firewall so that the only access to this webserver is from localhost.  If you prefer a different one-line web server, (here's a whole list of them.)[https://gist.github.com/willurd/5720255]
 
 Appendix: old vs. new <video> tags in XML
 =========================================
@@ -87,8 +85,7 @@ Especially for older courses that predate Studio authoring, the video tags somet
 
 
 ```xml
-<video 
-       display_name="Video (5:59)" 
+<video display_name="Video (5:59)" 
        download_track="true" 
        download_video="true" 
        source="http://s3.amazonaws.com/BESTech/CS169/download/CS169_v13_w1l1s2.mp4" 
