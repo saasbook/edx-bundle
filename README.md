@@ -22,7 +22,9 @@ Ruby, Python, and Perl.  Deal with it.  You therefore need:
  install nokogiri`, possibly as root, if you don't)
  * Perl, any version >=5 (`perl -v` to check)
  * The [youtube-dl](rg3.github.io/youtube-dl/) Python script (which in turn relies on Python 2.6+; `python --version` to check)
- * Comfort using shell scripts and other power tools.  No GUI here.  If
+ * Comfort using shell scripts and other power tools, and a standard
+ god-fearing Unix environment with the usual command-line utilities
+ available (`find`, etc).  No GUI here.  If
  step 1 below looks alien to you, stop and get help.
 
 What to do 
